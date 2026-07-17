@@ -8,7 +8,7 @@
   "main": "src/index.ts",
   "scripts": {
     "certs": "./scripts/generate-certs.sh",
-    "dev": "node --watch src/index.ts",
+    "dev": "USE_SSL=true node --watch src/index.ts",
     "start": "node src/index.ts",
     "typecheck": "tsc --noEmit",
     "test": "node --test"

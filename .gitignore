@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+.idea
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Test coverage
+coverage/
+
+# Caches
+.npm/
+*.tsbuildinfo
+
+# Editors
+.idea/
+.vscode/
+
+# OS
+.DS_Store

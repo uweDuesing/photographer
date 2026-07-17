@@ -44,7 +44,7 @@
 
 **Interfaces:**
 - Consumes: nothing.
-- Produces: `loadTlsCredentials(certsDir?: string): { key: Buffer; cert: Buffer }` — default export absent; named export. `certsDir` defaults to the `certs/` directory at the repo root. Throws `Error` when either file is missing. Task 2 calls this.
+- Produces: `loadTlsCredentials(certsDir?: string): { key: Buffer; cert: Buffer }` — default export absent; named export. `certsDir` defaults to the `certs/` directory at the repo root. Throws an `Error` naming the path and `npm run certs` when a file is missing (ENOENT); any other read error (e.g. EACCES) propagates unchanged, so a permissions problem is never misreported as a missing certificate. Task 2 calls this.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -112,9 +112,11 @@ export function loadTlsCredentials(certsDir: string = defaultCertsDir): {
 function read(path: string): Buffer {
   try {
     return readFileSync(path);
-  } catch {
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
     throw new Error(
       `TLS certificate not found at ${path}. Run \`npm run certs\` to generate one.`,
+      { cause: error },
     );
   }
 }

@@ -1,6 +1,9 @@
 # Dependencies
 node_modules/
 .idea
+
+# Certificates (generated locally, never committed)
+certs/
 # Logs
 logs/
 *.log
